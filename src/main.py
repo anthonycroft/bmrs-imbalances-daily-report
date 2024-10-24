@@ -40,15 +40,6 @@ def get_system_imbalance_data() -> DataFrame:
         # Return the DataFrame for further use
         return df
 
-        # Print data points for review
-        # for item in data["data"]:
-        #     print(f"Settlement Date: {item['settlementDate']}")
-        #     print(f"Settlement Period: {item['settlementPeriod']}")
-        #     print(f"Start Time: {item['startTime']}")
-        #     print(f"System Sell Price: {item['systemSellPrice']}")
-        #     print(f"System Buy Price: {item['systemBuyPrice']}")
-        #     print(f"Net Imbalance Volume: {item['netImbalanceVolume']}")
-        #     print("---")
     else:
         print(f"Error: Unable to fetch data, Status code {response.status_code}")
 
@@ -58,6 +49,9 @@ def get_system_imbalance_data() -> DataFrame:
 
 def clean_data(df: DataFrame) -> DataFrame:
     # Check for 48 rows:
+
+    # Strip white space from coiumn names
+    df.columns = df.columns.str.strip()
 
     df.isnull().sum()  # Check for missing values
     df.dropna()  # Drop rows with missing values
@@ -71,7 +65,6 @@ def clean_data(df: DataFrame) -> DataFrame:
     df = df[df["systemBuyPrice"] >= 0]
 
     # Basic method to check for outliers using z-score
-
     df = df[
         (
             np.abs(
@@ -86,16 +79,36 @@ def clean_data(df: DataFrame) -> DataFrame:
     # Remove duplicate rows
     df.drop_duplicates(inplace=True)
 
+    # Sort the DataFrame by date and period
+    df.sort_values(by=["settlementDate", "settlementPeriod"], inplace=True)
+
+    # Round the 'systemBuyPrice' and 'systemSellPrice' columns to 2 decimal places
+    df["systemBuyPrice"] = df["systemBuyPrice"].round(2)
+    df["systemSellPrice"] = df["systemSellPrice"].round(2)
+    df["netImbalanceVolume"] = df["netImbalanceVolume"].round(2)
+
+    # Rename columns for consistency
+    df.rename(
+        columns={
+            "settlementDate": "date",
+            "settlementPeriod": "period",
+            "systemSellPrice": "sellPrice",
+            "systemBuyPrice": "buyPrice",
+            "netImbalanceVolume": "volume",
+        },
+        inplace=True,
+    )
+
     # Check the number of rows in the DataFrame
     row_count = df.shape[0]
     print(f"Number of rows: {row_count}")
 
-    # df[['systemSellPrice', 'systemBuyPrice', 'netImbalanceVolume']] = df[['systemSellPrice', 'systemBuyPrice', 'netImbalanceVolume']].fillna(0)
+    return df
 
 
 if __name__ == "__main__":
     df = get_system_imbalance_data()
-    clean_data(df)
+    df_clean = clean_data(df)
 
     # Print the DataFrame for review
-    print(df)
+    print(df_clean)

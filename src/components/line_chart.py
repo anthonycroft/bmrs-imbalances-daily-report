@@ -16,7 +16,7 @@ def render_line_chart(app: Dash, data: pd.DataFrame, y_column: str, title: str, 
         x="startTime",
         y=y_column,
         title=title,
-        labels={y_column: y_label, "startTime": "Time"},
+        labels={y_column: y_label, "startTime": "startTime"},
     )
 
     fig.update_layout(margin=dict(t=50), title_x=0.5)

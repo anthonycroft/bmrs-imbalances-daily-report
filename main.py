@@ -1,18 +1,14 @@
 from datetime import datetime, timedelta
 
 import pandas as pd
-import src.components.data_factory as formatter
 
 # import Dash components
 from dash import Dash
 from dash_bootstrap_components.themes import BOOTSTRAP
 from pandas import DataFrame
 from src.components.layout import create_layout
-
-# import dash
-# from dash import dcc, html
-# import dash_bootstrap_components as dbc
-# import plotly.graph_objects as go
+from src.data.cleaner import clean_data
+from src.data.fetcher import fetch_data
 
 
 class ImbalanceReportGenerator:
@@ -77,24 +73,24 @@ class CreatePlots:
         app.layout = create_layout(app, self.data)
         app.run()
 
-    # ------------------------------------------------------
-    # Format data
-    # ------------------------------------------------------
-
 
 def main():
-    r_date = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+    # Initialize df_clean outside the try block
+    df_clean = None
+
+    # Set the report date to yesterday
+    r_date = (datetime.now() - timedelta(days=2)).strftime("%Y-%m-%d")
 
     try:
         # ------------------------------------------------------
-        # Format data
+        # Format and clean the data
         # ------------------------------------------------------
         # Attempt to fetch and format the data
-        df_shaped = formatter.fetch_data(r_date)
+        df_shaped = fetch_data(r_date)
         print("Data fetched and formatted successfully.")
 
         # Clean the data
-        df_clean = formatter.clean_data(df_shaped)
+        df_clean = clean_data(df_shaped)
         print("Data cleaned successfully.")
 
         # Continue with further processing of `data` (e.g., cleaning or analysis)
@@ -107,20 +103,20 @@ def main():
         # General catch-all for any unexpected errors
         print(f"An unexpected error occurred: {e}")
 
-    # # ------------------------------------------------------
+    # ------------------------------------------------------
 
     # Generate report
-    report = ImbalanceReportGenerator(df_clean)
-    report.calculate_imbalance_cost()
-    report.generate_report()
 
-    # # Fetch time series
-    # ts_fetcher = TimeSeriesFetcher(clean_data)
-    # # print(ts_fetcher.fetch_series('volume'))
-    # # print(ts_fetcher.fetch_series('price'))
+    # Ensure df_clean is not None before generating report or plotting
+    if df_clean is not None:
+        report = ImbalanceReportGenerator(df_clean)
+        report.calculate_imbalance_cost()
+        report.generate_report()
 
-    # plotter = CreatePlots(clean_data)
-    # plotter.create_plot()
+        plotter = CreatePlots(df_clean)
+        plotter.create_plot()
+    else:
+        print("No data available for reporting or plotting due to previous errors.")
 
 
 # Main flow for generating the report

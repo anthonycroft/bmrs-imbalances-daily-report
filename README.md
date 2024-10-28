@@ -69,7 +69,7 @@ python -m venv <env-name>
 
 2. Accessing the Visualization:
   
-  After running the file in (1) above navigate to http://127.0.0.1:8050 in your web browser.
+    After running the file in (1) above navigate to http://127.0.0.1:8050 in your web browser.
 
 ## Project Structure
 

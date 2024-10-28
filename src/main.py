@@ -5,14 +5,18 @@ import pandas as pd
 # import Dash components
 from dash import Dash
 from dash_bootstrap_components.themes import BOOTSTRAP
-from src.components.layout import create_layout
-from src.data.cleaner import clean_data
-from src.data.fetcher import fetch_data
-from src.reporting.reporter import create_imbalance_report
+from components.layout import create_layout
+from data.cleaner import clean_data
+from data.fetcher import fetch_data
+from reporting.reporter import create_imbalance_report
+
+"""
+Main Program
+"""
 
 
 class TimeSeriesFetcher:
-    """Returns either pice or volume as a pandas series"""
+    """Returns a series present in the dataframe - for future use"""
 
     def __init__(self, df: pd.DataFrame):
         self.df = df
@@ -22,6 +26,8 @@ class TimeSeriesFetcher:
 
 
 def main():
+    """Runs the application"""
+
     # Initialize df_clean outside the try block
     df_clean = None
 
@@ -59,7 +65,7 @@ def main():
 
         # create visualisations
         app = Dash(external_stylesheets=[BOOTSTRAP])
-        app.title = "Daily Imbalance Report"
+        app.title = "Daily Imbalance Cost Report"
         app.layout = create_layout(app, df_clean)
         app.run()
     else:

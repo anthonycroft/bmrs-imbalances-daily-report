@@ -10,6 +10,7 @@ and that the final output values match the expected values.
 import pandas as pd
 import pytest
 from src.reporting.calculations import (
+    calculate_hour,
     create_calculated_columns,
     daily_imbalance_unit_rate,
     net_imbalance_cost_total,
@@ -68,8 +69,6 @@ def test_calculated_columns(df, calculated_col, expected_col):
 
 
 def test_net_imbalance_cost_total(df):
-    # Load the sample data and create tool calculated columns
-    df = pre_processing()
 
     # Run the calculation for net imbalance cost total
     calculated_nic_total = net_imbalance_cost_total(df)
@@ -81,9 +80,7 @@ def test_net_imbalance_cost_total(df):
     ), f"Expected {round(df['expected_net_imbalance_cost'].iloc[0],0)}, got {round(calculated_nic_total,0)}"
 
 
-def test_daily_imbalance_unit_rate():
-    # Load the sample data and create tool calculated columns
-    df = pre_processing()
+def test_daily_imbalance_unit_rate(df):
 
     # Run the calculation for daily imbalance unit rate
     calculated_dir = daily_imbalance_unit_rate(df)
@@ -93,6 +90,28 @@ def test_daily_imbalance_unit_rate():
         round(calculated_dir, 2)
         == round(df["expected_daily_imbalance_unit_rate"].iloc[0], 2)
     ), f"Expected {round(df['expected_daily_imbalance_unit_rate'].iloc[0],2)}, got {round(calculated_dir,2)}"
+
+
+def test_calculate_max_volume_hour(df):
+
+    # Run the function to calculate the hour with the highest imbalance volume
+    max_volume_row = calculate_hour(df)
+
+    # Expected values for comparison
+    expected_date = "24/10/2024"
+    expected_hour = "07:00"
+    expected_volume = 1766.17
+
+    # Check if calculated date, hour, and volume match expected values
+    assert (
+        max_volume_row["date"] == expected_date
+    ), f"Expected date {expected_date}, got {max_volume_row['date']}"
+    assert (
+        max_volume_row["hour"].strftime("%H:%M") == expected_hour
+    ), f"Expected hour {expected_hour}, got {max_volume_row['hour'].strftime('%H:%M')}"
+    assert (
+        round(max_volume_row["absoluteVolume"], 2) == round(expected_volume, 2)
+    ), f"Expected volume {expected_volume}, got {round(max_volume_row['absoluteVolume'], 2)}"
 
 
 if __name__ == "__main__":

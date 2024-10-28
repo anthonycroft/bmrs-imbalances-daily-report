@@ -1,8 +1,9 @@
 import pandas as pd
 
-
-"""Data cleansing routines. Concerned with rows rather than columns.
-See fetcher.py for column level processing"""
+"""
+Data cleansing routines. Concerned with rows rather than columns.
+See fetcher.py for column level processing
+"""
 
 def remove_na(df: pd.DataFrame) -> pd.DataFrame:
     """Removes rows with any NA or NaN values."""

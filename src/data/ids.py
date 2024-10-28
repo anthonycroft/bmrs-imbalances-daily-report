@@ -11,6 +11,7 @@ EXPECTED_TYPES = {
 
 # Columns used in the project
 REQUIRED_COLUMNS_RENAMER = {
+    "settlementDate": "date",
     "startTime": "startTime",
     "systemSellPrice": "price",
     "netImbalanceVolume": "volume",

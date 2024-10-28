@@ -4,7 +4,14 @@ from dash import Dash, html
 from . import line_chart
 from . import ids
 
+"""
+Handles the layout of the Daily Imbalance Report using components from the
+Dash library
+"""
+
 def create_layout(app: Dash, data: pd.DataFrame) -> html.Div:
+    """Creates the layout for the Daily Imbalance Report"""
+    # Create the layout
     return html.Div(
         className="app-div",
         children=[

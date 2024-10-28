@@ -5,8 +5,10 @@ from datetime import datetime
 from . import ids
 
 
-"""Fetches and formats the data i.e. concerned with columns.
-See also cleaner.py for cleansing (row) processing"""
+"""
+Fetches and formats the data i.e. concerned with columns.
+See also cleaner.py for cleansing (row processing).
+"""
 
 
 def get_raw_data(r_date: datetime) -> dict:
@@ -62,6 +64,7 @@ def enforce_data_types(df: pd.DataFrame) -> pd.DataFrame:
             raise ValueError(
                 f"Column '{column}' could not be cast to {expected_type}. Error: {e}"
             )
+        
     return df
 
 
@@ -77,8 +80,5 @@ def fetch_data(r_date: datetime) -> pd.DataFrame:
     df = enforce_data_types(df)
     # Select only required columns and rename them
     df = column_selector(df)
-    print(df)
-
-
 
     return df

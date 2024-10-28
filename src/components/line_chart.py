@@ -3,6 +3,9 @@ import plotly.express as px
 from dash import Dash, dcc, html
 from . import ids
 
+"""
+Renders a Line chart
+"""
 
 def render_line_chart(app: Dash, data: pd.DataFrame, y_column: str, title: str, y_label: str) -> html.Div:
     """Renders a generic line chart for a given column in the data."""

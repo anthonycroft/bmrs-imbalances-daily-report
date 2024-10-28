@@ -94,15 +94,16 @@ project/
 │   │   ├── fetcher.py
 │   │   └── ids.py
 │   │
-│   └── reporting/
-│       ├── calculations.py
-│       └── reporter.py      
+│   ├── reporting/
+│   │    ├── calculations.py
+│   │    └── reporter.py      
+│   │
+│   └── main.py
 │
 ├── tests/
 │   ├── test_calculations.py
 │   └── test_data.csv 
 │
-├── main.py
 ├── requirements.txt
 └── README.md
 ```

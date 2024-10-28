@@ -1,4 +1,4 @@
-﻿settlementDate,settlementPeriod,startTime,price,volume,expected_imbalanceVolumeAbsolute,expected_imbalanceCost,expected_imbalanceCostAbsolute,expected_daily_imbalance_unit_rate,expected_net_imbalance_cost
+﻿date,settlementPeriod,startTime,price,volume,expected_imbalanceVolumeAbsolute,expected_imbalanceCost,expected_imbalanceCostAbsolute,expected_daily_imbalance_unit_rate,expected_net_imbalance_cost
 24/10/2024,1,2024-10-23T23:00:00Z,102.7,432.21,432.21,44387.967,44387.967,97.90046252,1077361.618
 24/10/2024,2,2024-10-23T23:30:00Z,100,65.6,65.6,6560,6560,,
 24/10/2024,3,2024-10-24T00:00:00Z,1.190851,-407.52,407.52,-485.2955995,485.2955995,,

@@ -29,14 +29,14 @@ To set up the project locally, follow these steps:
 1. Clone the repository:
 
 ``` 
-git clone https://github.com/yourusername/your-repo.git
+git clone https://github.com/anthonycroft/bmrs-imbalances-daily-report.git
 cd your-repo
 ```
 
 2. Create a virtual environment:
 
 ```Python
-python -m venv venv
+python -m venv <env-name>
 ```
 
 3. Activate the virtual environment:
@@ -77,6 +77,7 @@ python -m venv venv
 
 ## Project Structure
 
+```
 project/
 │
 ├── assets/
@@ -88,22 +89,30 @@ project/
 │   │   ├── line_chart.py
 │   │   └── ids.py
 │   │
-│   └── data/
-│       ├── fetcher.py
-│       └── loader.py
+│   ├── data/
+│   │   ├── cleaner.py
+│   │   ├── fetcher.py
+│   │   └── ids.py
+│   │
+│   └── reporting/
+│       ├── calculations.py
+│       └── reporter.py      
 │
 ├── tests/
-│   └── test_calculations.py
+│   ├── test_calculations.py
+│   └── test_data.csv 
 │
+├── main.py
 ├── requirements.txt
 └── README.md
+```
 
 ## Testing
 
 This project includes unit tests to ensure the accuracy of calculations. To run the tests, use the following command:
 
   ```
-  pytest
+  pytest tests/test_calculations.py
   ```
 
 ## Contributing

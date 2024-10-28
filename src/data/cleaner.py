@@ -1,22 +1,8 @@
 import pandas as pd
-from . import ids
-
-"""Formats imported data according to expected columns and data types."""
-
-def enforce_data_types(df: pd.DataFrame) -> pd.DataFrame:
-    """Ensures correct datatypes for expected columns."""
-
-    for column, expected_type in ids.EXPECTED_TYPES.items():
-        try:
-            df[column] = df[column].astype(expected_type)
-        except ValueError as e:
-            raise ValueError(
-                f"Column '{column}' could not be cast to {expected_type}. Error: {e}"
-            )
-    return df
 
 
-"""Data cleansing routines."""
+"""Data cleansing routines. Concerned with rows rather than columns.
+See fetcher.py for column level processing"""
 
 def remove_na(df: pd.DataFrame) -> pd.DataFrame:
     """Removes rows with any NA or NaN values."""

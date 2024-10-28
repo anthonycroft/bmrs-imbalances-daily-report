@@ -9,8 +9,10 @@ EXPECTED_TYPES = {
     "netImbalanceVolume": "float64",
 }
 
-COLUMN_RENAMER = {
+# Columns used in the project
+REQUIRED_COLUMNS_RENAMER = {
     "startTime": "startTime",
     "systemSellPrice": "price",
     "netImbalanceVolume": "volume",
 }
+

@@ -1,4 +1,3 @@
-
 import pandas as pd
 import requests
 
@@ -6,10 +5,12 @@ from datetime import datetime
 from . import ids
 
 
+"""Fetches and formats the data i.e. concerned with columns.
+See also cleaner.py for cleansing (row) processing"""
+
+
 def get_raw_data(r_date: datetime) -> dict:
     """Fetches the data for the specified date and returns it as a DataFrame."""
-
-    # r_date = date or (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
 
     endpoint = f"{ids.BASE_URL}{r_date}?format=json"
     response = requests.get(endpoint)
@@ -43,19 +44,41 @@ def to_dataframe(raw_data: dict) -> pd.DataFrame:
     # Convert raw data to DataFrame
     df = pd.DataFrame(raw_data["data"])
 
-    # Select only columns defined in COLUMN_RENAMER and rename them
-    df = df[list(ids.COLUMN_RENAMER.keys())].rename(columns=ids.COLUMN_RENAMER)
+    return df
 
+
+def column_selector(df: pd.DataFrame) -> pd.DataFrame:
+    # Select only columns defined in REQUIRED_COLUMNS_RENAMER and rename them
+    return df[list(ids.REQUIRED_COLUMNS_RENAMER.keys())].rename(columns=ids.REQUIRED_COLUMNS_RENAMER)
+
+
+def enforce_data_types(df: pd.DataFrame) -> pd.DataFrame:
+    """Ensures correct datatypes for expected columns."""
+
+    for column, expected_type in ids.EXPECTED_TYPES.items():
+        try:
+            df[column] = df[column].astype(expected_type)
+        except ValueError as e:
+            raise ValueError(
+                f"Column '{column}' could not be cast to {expected_type}. Error: {e}"
+            )
     return df
 
 
 def fetch_data(r_date: datetime) -> pd.DataFrame:
     """Fetches and formats the imbalance data as a DataFrame."""
 
+    # fetch the data via API
     raw_data = get_raw_data(r_date)
 
+    # Convert the raw data to a DataFrame
     df = to_dataframe(raw_data)
-    # After final cleaning and before passing the DataFrame for analysis
-    # df.set_index("startTime", inplace=True)
+    # Ensure correct data types
+    df = enforce_data_types(df)
+    # Select only required columns and rename them
+    df = column_selector(df)
+    print(df)
+
+
 
     return df

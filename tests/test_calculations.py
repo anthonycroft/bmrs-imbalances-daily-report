@@ -1,7 +1,8 @@
 # test_calculations.py
-"""Performs tests against a sample test file (tests/test_data.csv) which contains
-pre-calculated values for intermediary columns and final output values required
-by the Daily Imbalnace Cost Rerport
+"""
+Performs tests against a sample test file (tests/test_data.csv) which contains
+pre-calculated columns and final output values required by the Daily Imbalnace Cost 
+Rerport
 
 The tests check that calculated columns contain the correct value for each time period
 and that the final output values match the expected values.
@@ -16,10 +17,13 @@ from src.reporting.calculations import (
     net_imbalance_cost_total,
 )
 
-# Define the data types for each column
+# Define the data types for each column (these are the columns
+# defined in the test file rather than the API, although naming
+# is kept consistent (except for `expected_` columns
+# which are only in the csv)
 data_types = {
-    "settlementDate": str,
-    "settlementPeriod": str,
+    "date": str,
+    "period": str,
     "startTime": str,
     "price": float,
     "volume": float,

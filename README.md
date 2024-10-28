@@ -67,13 +67,9 @@ python -m venv <env-name>
   python src/main.py
   ```
 
-2. Accessing the Visualization: If using Dash for visualizations, start the server:
-
-  ```
-  python src/app.py
-  ```
+2. Accessing the Visualization:
   
-  Then navigate to http://127.0.0.1:8050 in your web browser.
+  After running the file in (1) above navigate to http://127.0.0.1:8050 in your web browser.
 
 ## Project Structure
 

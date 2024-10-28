@@ -2,6 +2,10 @@ from . import calculations as ca
 
 from pandas import DataFrame
 
+"""
+Creates the final output Report and vsiualisation (uses Dash for this purpose)
+"""
+
 def print_report(nic: float, dir: float, date: str, hour: str, volume: float) -> None:
    
     # Print summary report

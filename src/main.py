@@ -14,7 +14,6 @@ from reporting.reporter import create_imbalance_report
 Main Program
 """
 
-
 class TimeSeriesFetcher:
     """Returns a series present in the dataframe - for future use"""
 
@@ -32,7 +31,7 @@ def main():
     df_clean = None
 
     # Set the report date to yesterday
-    r_date = (datetime.now() - timedelta(days=4)).strftime("%Y-%m-%d")
+    r_date = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
 
     # ------------------------------------------------------
     # Format and clean the data

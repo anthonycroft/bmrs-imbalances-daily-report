@@ -1,7 +1,14 @@
 import pandas as pd
 
+"""
+Creates additional columns in the dataframe to aid final calculations.
+Produces final outputs used in the Daily Imbalance Report.
+"""
+
 
 def calculate_absolute_volume(df: pd.DataFrame) -> None:
+    """Calculates absolute volume ignoring direction (short or long))"""
+    
     # Imbalance cost (nets long and short positions)
     df["absoluteVolume"] = df.apply(lambda row: (abs(row["volume"])), axis=1)
 
@@ -41,6 +48,8 @@ def daily_imbalance_unit_rate(df: pd.DataFrame) -> float:
 
 
 def calculate_hour(df: pd.DataFrame) -> float:
+    """Calculates the hour with the largest absolute volum."""
+
     # Ensure startTime is in datetime format
     df["startTime"] = pd.to_datetime(df["startTime"])
 
@@ -55,5 +64,7 @@ def calculate_hour(df: pd.DataFrame) -> float:
 
 
 def create_calculated_columns(df: pd.DataFrame) -> None:
+    """ calculates interim calculated columns required for final report values"""
+
     calculate_absolute_volume(df)
     calculate_imbalance_cost(df)
